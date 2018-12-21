@@ -6,11 +6,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Alarm Ranges',
       theme: new ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
       ),
-      home: new MyHomePage(title: 'Flutter Demo Home Page'),
+      home: new MyHomePage(title: 'Alarm Ranges'),
     );
   }
 }
@@ -25,11 +25,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  List<Alarm> _alarms = new List();
 
-  void _incrementCounter() {
+  void _newAlarm() {
     setState(() {
-      _counter++;
+      _alarms.add(new Alarm());
     });
   }
 
@@ -40,24 +40,29 @@ class _MyHomePageState extends State<MyHomePage> {
         title: new Text(widget.title),
       ),
       body: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Text(
-              'You have pushed the button this many times:',
-            ),
-            new Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
+        child: ListView.builder(
+            itemCount: _alarms.length,
+            itemBuilder: (BuildContext ctxt, int index) => _alarms[index]),
       ),
       floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: _newAlarm,
+        tooltip: 'Create new alarm',
         child: new Icon(Icons.add),
       ),
     );
+  }
+}
+
+class Alarm extends StatefulWidget {
+  Alarm({Key key}) : super(key: key);
+
+  @override
+  _AlarmState createState() => new _AlarmState();
+}
+
+class _AlarmState extends State<Alarm> {
+  @override
+  Widget build(BuildContext context) {
+    return new Text("Todo");
   }
 }
