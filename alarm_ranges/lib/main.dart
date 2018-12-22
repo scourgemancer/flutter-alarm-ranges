@@ -63,6 +63,7 @@ class Alarm extends StatefulWidget {
 class _AlarmState extends State<Alarm> {
   @override
   Widget build(BuildContext context) {
-    return new Text("Todo");
+    return new Text("Play [selected audio file] [number] many times from " +
+        "[start time] to [end time] (while within [number] meters from start)");
   }
 }

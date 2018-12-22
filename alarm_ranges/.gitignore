@@ -7,3 +7,10 @@
 build/
 
 .flutter-plugins
+
+workspace.xml
+
+vcs.xml
+
+.gitignore
+
