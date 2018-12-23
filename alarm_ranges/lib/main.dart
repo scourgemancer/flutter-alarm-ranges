@@ -25,11 +25,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Alarm> _alarms = new List();
+  List<AlarmRange> _alarmRanges = new List();
 
-  void _newAlarm() {
+  void _newAlarmRange() {
     setState(() {
-      _alarms.add(new Alarm());
+      _alarmRanges.add(new AlarmRange());
     });
   }
 
@@ -41,11 +41,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: new Center(
         child: ListView.builder(
-            itemCount: _alarms.length,
-            itemBuilder: (BuildContext ctxt, int index) => _alarms[index]),
+            itemCount: _alarmRanges.length,
+            itemBuilder: (BuildContext ctxt, int index) => _alarmRanges[index]),
       ),
       floatingActionButton: new FloatingActionButton(
-        onPressed: _newAlarm,
+        onPressed: _newAlarmRange,
         tooltip: 'Create new alarm',
         child: new Icon(Icons.add),
       ),
@@ -53,17 +53,71 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class Alarm extends StatefulWidget {
-  Alarm({Key key}) : super(key: key);
+class AlarmRange extends StatefulWidget {
+  AlarmRange({Key key}) : super(key: key);
 
   @override
-  _AlarmState createState() => new _AlarmState();
+  _AlarmRangeState createState() => new _AlarmRangeState();
 }
 
-class _AlarmState extends State<Alarm> {
+class _AlarmRangeState extends State<AlarmRange> {
+  int numAlarms = 0;
+  // The startTime is initialized as the next whole hour
+  TimeOfDay startTime = TimeOfDay.now().replacing(
+      hour: (TimeOfDay.now().hour + 1)%23, minute: 0);
+  // The endTime is initialized as the hour after the next whole hour
+  TimeOfDay endTime = TimeOfDay.now().replacing(
+      hour: (TimeOfDay.now().hour + 2)%23, minute: 0);
+
   @override
-  Widget build(BuildContext context) {
-    return new Text("Play [selected audio file] [number] many times from " +
-        "[start time] to [end time] (while within [number] meters from start)");
+  Widget build(BuildContext context) {// unused but for example
+    return new Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text("Play"),
+            Text("[selected audio file]"),
+            Text("[number]"),
+            Text("many times from"),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            FlatButton(
+              onPressed: () => showTimePicker(
+                  context: context,
+                  initialTime: startTime)
+                  .then((TimeOfDay time) => setState(() => startTime = time)),
+              child: new Text(startTime.toString()),
+            ),
+            Text("to"),
+            FlatButton(
+              onPressed: () => showTimePicker(
+                  context: context,
+                  initialTime: endTime)
+                  .then((TimeOfDay time) => setState(() => endTime = time)),
+              child: new Text(endTime.toString()),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text("(while within"),
+            Text("[number]"),
+            Text("meters from start)"),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text("[Pick days of week]"),
+            Text("[repeating?]"),
+          ],
+        ),
+      ],
+    );
   }
 }
