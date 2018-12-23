@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
       title: 'Alarm Ranges',
       theme: new ThemeData(
         primarySwatch: Colors.deepPurple,
+        brightness: Brightness.dark,
       ),
       home: new MyHomePage(title: 'Alarm Ranges'),
     );
@@ -38,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
+        backgroundColor: Colors.deepPurple,
       ),
       body: new Center(
         child: ListView.builder(
@@ -48,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _newAlarmRange,
         tooltip: 'Create new alarm',
         child: new Icon(Icons.add),
+        backgroundColor: Colors.deepPurpleAccent,
       ),
     );
   }
@@ -71,53 +74,63 @@ class _AlarmRangeState extends State<AlarmRange> {
 
   @override
   Widget build(BuildContext context) {// unused but for example
-    return new Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Play"),
-            Text("[selected audio file]"),
-            Text("[number]"),
-            Text("many times from"),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-              onPressed: () => showTimePicker(
-                  context: context,
-                  initialTime: startTime)
-                  .then((TimeOfDay time) => setState(() => startTime = time)),
-              child: new Text(startTime.toString()),
-            ),
-            Text("to"),
-            FlatButton(
-              onPressed: () => showTimePicker(
-                  context: context,
-                  initialTime: endTime)
-                  .then((TimeOfDay time) => setState(() => endTime = time)),
-              child: new Text(endTime.toString()),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("(while within"),
-            Text("[number]"),
-            Text("meters from start)"),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("[Pick days of week]"),
-            Text("[repeating?]"),
-          ],
-        ),
-      ],
+    return new Container(
+      margin: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(10),
+      decoration: new BoxDecoration(
+        border: new Border.all(color: Colors.black),
+        borderRadius: new BorderRadius.all(Radius.circular(15))
+      ),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text("Play"),
+              Text("[selected audio file]"),
+              Text("[number]"),
+              Text("many times from"),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FlatButton(
+                onPressed: () => showTimePicker(
+                    context: context,
+                    initialTime: startTime)
+                    .then((TimeOfDay time) => setState(() => startTime = time)),
+                child: new Text(startTime.toString()),
+                color: Colors.deepPurpleAccent,
+              ),
+              Text("to"),
+              FlatButton(
+                onPressed: () => showTimePicker(
+                    context: context,
+                    initialTime: endTime)
+                    .then((TimeOfDay time) => setState(() => endTime = time)),
+                child: new Text(endTime.toString()),
+                color: Colors.deepPurpleAccent,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text("(while within"),
+              Text("[number]"),
+              Text("meters from start)"),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text("[Pick days of week]"),
+              Text("[repeating?]"),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
