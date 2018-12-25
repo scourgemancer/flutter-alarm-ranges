@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:datetime_picker_formfield/time_picker_formfield.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(new MyApp());
 
@@ -106,22 +108,18 @@ class _AlarmRangeState extends State<AlarmRange> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FlatButton(
-                onPressed: () => showTimePicker(
-                    context: context,
-                    initialTime: startTime)
-                    .then((TimeOfDay time) => setState(() => startTime = time)),
-                child: new Text(startTime.toString()),
-                color: Colors.deepPurpleAccent,
+              TimePickerFormField(
+                format: DateFormat("h:mm a"),
+                decoration: InputDecoration(labelText: 'First'),
+                initialTime: startTime,
+                onChanged: (time) => setState(() => startTime = time),
               ),
               Text("to"),
-              FlatButton(
-                onPressed: () => showTimePicker(
-                    context: context,
-                    initialTime: endTime)
-                    .then((TimeOfDay time) => setState(() => endTime = time)),
-                child: new Text(endTime.toString()),
-                color: Colors.deepPurpleAccent,
+              TimePickerFormField(
+                format: DateFormat("h:mm a"),
+                decoration: InputDecoration(labelText: 'Last'),
+                initialTime: endTime,
+                onChanged: (time) => setState(() => endTime = time),
               ),
             ],
           ),
